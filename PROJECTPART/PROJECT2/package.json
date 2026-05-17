@@ -1,5 +1,13 @@
 {
+  "name": "petshop-live",
+  "homepage": "https://dharmesh02sahetai-spec.github.io/petshop-live",
   "dependencies": {
     "axios": "^1.6.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }
