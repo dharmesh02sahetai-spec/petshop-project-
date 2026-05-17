@@ -1,0 +1,179 @@
+<?php
+session_start();
+include'connection.php';
+if(isset($_POST['submit']))
+{
+	$studio_name=$_POST['studio_name'];
+	$studio_contact=$_POST['studio_contact'];
+	$studio_address=$_POST['studio_address'];
+	$studio_pincode=$_POST['studio_pincode'];
+	$studio_email=$_POST['studio_email'];
+	$address_area=$_POST['address_area'];
+	$password=$_POST['password'];
+	//$res_image=$_POST['res_image'];
+	
+	$file = $_FILES['file']['name'];
+    $tmp = $_FILES['file']['tmp_name'];
+    $path = "upload/$file";
+    
+   $upload_url = 'https://photowisestrudi.000webhostapp.com/ADMIN/'.$path;
+
+    $exe = explode(".", $file);
+    $e = strtolower(end($exe));
+
+    	if(move_uploaded_file($tmp, $path))
+    	{
+    		$exe=$obj->query("insert into studio_register(studio_name,studio_contact,studio_address,studio_pincode,studio_email,address_area,password,studio_logo)
+			values('$studio_name','$studio_contact','$studio_address','$studio_pincode','$studio_email','$address_area','$password','$upload_url')");
+				if($exe)
+				{
+					echo "<script>alert('New Studio Detail Uploaded Successfully');</script>";
+				}
+				else
+				{
+					echo "<script>alert('something is wrong');</script>";
+					///echo "Failed : " . mysqli_error($obj);
+				}
+    	}
+    	else
+    	{
+    		echo "<script>alert('Error in File Uploading..');</script>";
+    	}
+    }
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="AdminKit">
+	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+
+	<title>PHOTOWISE</title>
+
+	<link href="css/app.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="wrapper">
+		<!-- sidebar start -->
+		<?php
+		include'common/sidebar.php';
+		?>
+		<!-- sidebar finish -->
+
+		<div class="main">
+			<!-- header start -->
+			<?php
+			include'common/header.php';
+			?>
+		<!-- header finish -->
+
+
+<main class="content">
+	<div class="container-fluid p-0">
+
+					<h1 class="alert alert-info h2 p-3">Studio Registration</h1> 
+			<div class="col-12 col-xl-12">
+				<div class="card">
+						
+					<div class="card-header">
+						</div>
+						<div class="card-body">
+	<form method="post" enctype="multipart/form-data">
+		<div class="mb-1 row">
+			<label class="col-form-label col-sm-3 text-sm-right font-weight-bold">Enter Studio Name</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="studio_name" name="studio_name" placeholder="Studio Name" required="" 
+                            pattern="[a-zA-Z]+" title="Title Must be Valid">
+				</div>
+		</div>
+		<div class="mb-1 row">
+			<label class="col-form-label col-sm-3 text-sm-right font-weight-bold">Enter Studio Contact</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="studio_contact" name="studio_contact" placeholder="Enter Studio Contact" required="" 
+                            pattern="[0-9]+" title="Title Must be Valid">
+				</div>
+		</div>
+		<div class="mb-1 row">
+			<label class="col-form-label col-sm-3 text-sm-right font-weight-bold">Enter Studio Address</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="studio_address" name="studio_address" placeholder="Enter Studio Address" required="" 
+                            pattern="[a-zA-Z]+" title="Title Must be Valid">
+				</div>
+		</div>
+		<div class="mb-1 row">
+			<label class="col-form-label col-sm-3 text-sm-right font-weight-bold">Enter Studio Pincode</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="studio_pincode" name="studio_pincode" placeholder="Enter Studio Pincode" required="" 
+                            pattern="[0-9]+" title="Title Must be Valid">
+				</div>
+		</div>
+		<div class="mb-1 row">
+			<label class="col-form-label col-sm-3 text-sm-right font-weight-bold">Enter Studio Email</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="studio_email" name="studio_email" placeholder="Enter Studio Email" required="" 
+                            pattern="[a-zA-Z]+" title="Title Must be Valid">
+				</div>
+		</div>
+		<div class="mb-1 row">
+			<label class="col-form-label col-sm-3 text-sm-right font-weight-bold">Enter Address Area</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="address_area" name="address_area" placeholder="Enter Address Area" required="" 
+                            pattern="[a-zA-Z]+" title="Title Must be Valid">
+				</div>
+		</div>
+			<div class="mb-1 row">
+			<label class="col-form-label col-sm-3 text-sm-right font-weight-bold">Enter Password</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="password" name="password" placeholder="Enter Password" required="" 
+                            pattern="[a-zA-Z0-9]+" title="Title Must be Valid">
+				</div>
+		</div>
+		
+		
+<div class="row mb-4">
+	<label class="col-form-label col-sm-3 text-sm-right font-weight-bold">Studio Image</label>
+		<div class="col-sm-7">
+			<input type="file" class="form-control" id="file" name="file" accept="image/png,image/gif,image/jpeg required="">
+		</div>
+</div>
+
+
+
+	<div class="mb-3 row">
+		<div class="col-sm-10 ml-sm-auto">
+			<input type="submit" name="submit" value="Submit" class="btn-primary"  style = "width:30%;margin-left: 120px;padding: 5px;font-weight: bold;">
+		</div>
+	</div>
+	</form>
+	</div>
+</div>
+</div>
+</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+</main>
+
+		<!-- footer start-->
+		<?php include'common/footer.php';?>
+		<!--footer finish-->
+		</div>
+	</div>
+
+	<script src="js/app.js"></script>
+
+</body>
+
+</html>
